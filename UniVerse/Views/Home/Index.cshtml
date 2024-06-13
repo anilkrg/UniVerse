@@ -1,0 +1,60 @@
+﻿@model IEnumerable<UniVerse.Model.ViewModel.customer>
+
+<h2>Search Customers</h2>
+
+<form method="post" asp-action="Index">
+    <div>
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" value="@ViewContext.HttpContext.Request.Query["id"].FirstOrDefault()" />
+    </div>
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="@ViewContext.HttpContext.Request.Query["name"].FirstOrDefault()" />
+    </div>
+    <div>
+        <label for="loanName">Loan Name:</label>
+        <input type="text" id="loanName" name="loanName" value="@ViewContext.HttpContext.Request.Query["loanName"].FirstOrDefault()" />
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.Id</td>
+                    <td>@customer.Name</td>
+                    <td>@customer.Email</td>
+                    <td>@customer.Phone</td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@customer.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@customer.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            
+                <tr>
+                    <td colspan="5" class="text-center">Record not found</td>
+                </tr>
+           
+        }
+    </tbody>
+</table>
